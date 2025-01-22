@@ -23,7 +23,10 @@ export default function BoatCard({
 
   // Reset thumbnail refs when thumbnails change
   useEffect(() => {
-    thumbnailRefs.current = thumbnailRefs.current.slice(0, thumbnails.length + 1);
+    thumbnailRefs.current = thumbnailRefs.current.slice(
+      0,
+      thumbnails.length + 1
+    );
   }, [thumbnails]);
 
   // Image change animation
@@ -33,7 +36,7 @@ export default function BoatCard({
     setIsAnimating(true);
 
     const tl = gsap.timeline({
-      defaults: { ease: "power2.inOut" }
+      defaults: { ease: "power2.inOut" },
     });
 
     tl.to(imageWrapperRef.current, {
@@ -42,20 +45,24 @@ export default function BoatCard({
       onComplete: () => {
         setCurrentImage(newImage);
         gsap.set(imageWrapperRef.current, {
-          clipPath: "inset(0 100% 0 0)"
+          clipPath: "inset(0 100% 0 0)",
         });
-      }
-    })
-    .to(imageWrapperRef.current, {
+      },
+    }).to(imageWrapperRef.current, {
       clipPath: "inset(0 0% 0 0)",
       duration: 0.7,
       ease: "power3.inOut",
-      onComplete: () => setIsAnimating(false)
+      onComplete: () => setIsAnimating(false),
     });
   };
 
   useEffect(() => {
-    if (!mainImageRef.current || !imageWrapperRef.current || !thumbnailContainerRef.current) return;
+    if (
+      !mainImageRef.current ||
+      !imageWrapperRef.current ||
+      !thumbnailContainerRef.current
+    )
+      return;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -116,31 +123,10 @@ export default function BoatCard({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 lg:gap-14 items-start">
-          <div className="relative w-full">
-            <div
-              ref={mainImageRef}
-              className="bg-primary relative aspect-square w-full"
-            >
-              <div ref={imageWrapperRef} className="relative w-full h-full">
-                <Image
-                  src={currentImage}
-                  alt={title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <div
-                ref={overlayRef}
-                className="absolute inset-0 bg-black opacity-0 pointer-events-none"
-              />
-            </div>
-          </div>
-
           <div className="relative h-full space-y-6 pt-4">
             <div
               ref={thumbnailContainerRef}
-              className="lg:absolute -left-[15%] bottom-[10%] flex justify-center gap-3"
+              className="lg:absolute -right-[15%] bottom-[10%] z-10 flex justify-center gap-3"
             >
               {[mainImage, ...thumbnails].map((thumb, index) => (
                 <button
@@ -156,7 +142,9 @@ export default function BoatCard({
                     alt={`${title} view ${index + 1}`}
                     fill
                     className={`object-cover transition-transform duration-300 
-                        ${currentImage !== thumb ? "group-hover:scale-110" : ""}`}
+                        ${
+                          currentImage !== thumb ? "group-hover:scale-110" : ""
+                        }`}
                   />
                   {currentImage !== thumb && (
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
@@ -193,6 +181,27 @@ export default function BoatCard({
               >
                 View Trips
               </Button>
+            </div>
+          </div>
+
+          <div className="relative w-full">
+            <div
+              ref={mainImageRef}
+              className="bg-primary relative aspect-square w-full"
+            >
+              <div ref={imageWrapperRef} className="relative w-full h-full">
+                <Image
+                  src={currentImage}
+                  alt={title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div
+                ref={overlayRef}
+                className="absolute inset-0 bg-black opacity-0 pointer-events-none"
+              />
             </div>
           </div>
         </div>

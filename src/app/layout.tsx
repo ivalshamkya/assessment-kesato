@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Epilogue, Questrial } from "next/font/google";
+import { Epilogue, Manrope, Questrial } from "next/font/google";
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
 import "./globals.css";
@@ -13,13 +13,22 @@ const optim = localFont({
 const questrial = Questrial({
   variable: "--font-questrial",
   weight: ["400"],
-  display: "swap"
+  display: "swap",
+  subsets: ["latin"]
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  weight: ["400"],
+  display: "swap",
+  subsets: ["latin"]
 });
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
   weight: ["400"],
-  display: "swap"
+  display: "swap",
+  subsets: ["latin"]
 });
 
 export const metadata: Metadata = {
@@ -39,7 +48,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${questrial.variable} ${optim.variable} ${epilogue.variable} antialiased`}
+        className={`${questrial.variable} ${optim.variable} ${epilogue.variable} ${manrope.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           {children}

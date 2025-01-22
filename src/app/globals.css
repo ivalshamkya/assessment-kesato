@@ -7,6 +7,7 @@
   --foreground: #171717;
   --primary: #baa54a;
   --secondary: #ffffff;
+  --darkGold: #86752D;
 }
 
 @media (prefers-color-scheme: dark) {

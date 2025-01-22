@@ -13,10 +13,12 @@ export default {
         foreground: "var(--foreground)",
         primary: "var(--primary)",
         secondary: "var(--secondary)",
+        darkGold: "var(--darkGold)"
       },
       fontFamily: {
         optim: "var(--font-optim)",
         epilogue: "var(--font-epilogue)",
+        manrope: "var(--font-manrope)"
       }
     },
   },

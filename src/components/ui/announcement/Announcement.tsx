@@ -20,7 +20,7 @@ const Announcement = ({
 }: AnnouncementProps) => {
   if (!isVisible) return null;
 
-  const [showAnnouncement, setShowAnnouncement] = useState(true);
+  const [showAnnouncement, setShowAnnouncement] = useState<boolean>(true);
 
   return (
     <>
