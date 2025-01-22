@@ -1,0 +1,14 @@
+{
+    "language": {
+        "id": "ID",
+        "en": "EN",
+        "label": "Language"
+    },
+    "navbar": {
+        "currency": "USD"
+    },
+    "boats": {
+        "price": "$3800"
+    }
+
+}

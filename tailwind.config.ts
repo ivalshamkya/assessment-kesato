@@ -14,6 +14,10 @@ export default {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
       },
+      fontFamily: {
+        optim: "var(--font-optim)",
+        epilogue: "var(--font-epilogue)",
+      }
     },
   },
   plugins: [],

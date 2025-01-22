@@ -1,0 +1,13 @@
+{
+    "language": {
+        "id": "ID",
+        "en": "EN",
+        "label": "Language"
+    },
+    "navbar": {
+        "currency": "IDR"
+    },
+    "boats": {
+        "price": "Rp62.031.200"
+    }
+}
