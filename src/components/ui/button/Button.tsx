@@ -39,6 +39,9 @@ const buttonVariants = cva(
                 white: [
                     "border-secondary",
                 ],
+                darkGold: [
+                    "border-[#86752D]"
+                ]
             },
             size: {
                 default: "py-[12px] px-[16px] text-sm md:text-lg",
@@ -81,6 +84,21 @@ const buttonVariants = cva(
                 variant: "tertiary",
                 colors: "white",
                 className: "text-white"
+            },
+            {
+                variant: "tertiary",
+                colors: "darkGold",
+                className: "text-[#86752D]"
+            },
+            {
+                variant: "primary",
+                colors: "darkGold",
+                className: "text-white bg-[#86752D] hover:text-[#86752D]"
+            },
+            {
+                variant: "secondary",
+                colors: "darkGold",
+                className: "text-[#86752D] hover:text-white hover:bg-[#86752D]"
             }
         ],
     }
