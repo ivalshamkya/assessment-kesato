@@ -1,46 +1,58 @@
-'use client'
-import { Destination } from "@/types/destination";
+"use client";
+import { IDestination } from "@/types/destination";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 interface DestinationCardProps {
-  destination: Destination;
+  destination: IDestination;
   isActive: boolean;
 }
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ 
-  destination, 
-  isActive
-}) => {
+export default function DestinationCard({
+  destination,
+  isActive,
+}: DestinationCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isActive && cardRef.current && contentRef.current && imageWrapperRef.current) {
-      const tl = gsap.timeline();
-      tl.fromTo(imageWrapperRef.current,
+    if (
+      isActive &&
+      cardRef.current &&
+      contentRef.current &&
+      imageWrapperRef.current
+    ) {
+      gsap.killTweensOf([imageWrapperRef.current, contentRef.current]);
+
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power2.out",
+        },
+      });
+
+      tl.fromTo(
+        imageWrapperRef.current,
         {
-          opacity: 0,
           scale: 1.1,
+          opacity: 0.8,
         },
         {
-          opacity: 1,
           scale: 1,
+          opacity: 1,
           duration: 1.2,
-          ease: "power2.out",
         }
-      ).fromTo(contentRef.current,
+      ).fromTo(
+        contentRef.current,
         {
+          y: 30,
           opacity: 0,
-          y: 30
         },
         {
-          opacity: 1,
           y: 0,
+          opacity: 1,
           duration: 1,
-          ease: "power2.out",
         },
         "-=0.8"
       );
@@ -50,40 +62,48 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
   return (
     <div 
       ref={cardRef} 
-      className="relative aspect-[3/4] w-full overflow-hidden"
+      className="relative w-full h-full overflow-hidden"
     >
-      {/* Image Container */}
-      <div ref={imageWrapperRef} className="relative w-full h-full">
+      <div 
+        ref={imageWrapperRef} 
+        className="relative w-full h-full"
+      >
         <Image
           src={destination.imageUrl}
           alt={`${destination.name} destination`}
-          className="object-cover"
-          priority={true}
+          className="object-cover object-center"
+          priority={isActive}
           quality={100}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw"
         />
-        
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
       </div>
 
-      {/* Content */}
-      <div 
+      <div
         ref={contentRef}
-        className="absolute inset-0 flex flex-col justify-center items-center"
+        className="absolute inset-0 flex flex-col justify-center px-12 md:px-16 lg:px-20"
       >
-        <div className="text-center space-y-4">
-          <p className="text-white/90 text-lg tracking-[0.2em] uppercase font-light">
-            START FROM €{destination.price}
-          </p>
-          <h2 className="text-white text-4xl tracking-[0.2em] uppercase font-extralight">
-            {destination.name}
-          </h2>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <p className="text-white/90 text-base md:text-lg tracking-[0.2em] uppercase font-light">
+              START FROM
+            </p>
+            <p className="text-white text-xl md:text-2xl tracking-[0.2em] uppercase font-light">
+              €{destination.price}
+            </p>
+          </div>
+          
+          <div className="max-w-[80%]">
+            <h2 className="text-white text-4xl md:text-5xl lg:text-6xl tracking-[0.2em] uppercase font-light leading-tight">
+              {destination.name}
+            </h2>
+          </div>
         </div>
       </div>
+
+      <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 hover:opacity-100" />
     </div>
   );
-};
-
-export default DestinationCard;
+}

@@ -21,7 +21,6 @@ export default function BoatCard({
   const thumbnailContainerRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Reset thumbnail refs when thumbnails change
   useEffect(() => {
     thumbnailRefs.current = thumbnailRefs.current.slice(
       0,
@@ -29,7 +28,6 @@ export default function BoatCard({
     );
   }, [thumbnails]);
 
-  // Image change animation
   const changeImage = (newImage: string) => {
     if (isAnimating || newImage === currentImage) return;
 
@@ -71,7 +69,6 @@ export default function BoatCard({
       },
     });
 
-    // Main image reveal
     tl.fromTo(
       imageWrapperRef.current,
       {
@@ -85,7 +82,6 @@ export default function BoatCard({
       }
     );
 
-    // Filter out null refs and animate thumbnails
     const validThumbnailRefs = thumbnailRefs.current.filter(Boolean);
     if (validThumbnailRefs.length > 0) {
       tl.fromTo(
@@ -116,11 +112,7 @@ export default function BoatCard({
 
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="mt-16 mb-24">
-        <div className="mb-16">
-          <div className="w-12 h-[1px] bg-[#8B7F55] mb-4" />
-          <h1 className="text-[40px] font-light text-zinc-900">OUR BOATS</h1>
-        </div>
+      <div className="mt-10 mb-10">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 lg:gap-14 items-start">
           <div className="relative h-full space-y-6 pt-4">

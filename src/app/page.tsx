@@ -12,29 +12,14 @@ import { Footer } from "@/components/ui/footer";
 import BoatsReversedSection from "@/components/section/BoatsReversedSection";
 
 export default function Home() {
-  const [boat1, setBoat1] = useState<IBoats | null>();
-  const [boat2, setBoat2] = useState<IBoats | null>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setBoat1(await getBoat1());
-        setBoat2(await getBoat2());
-      } catch (error) {
-        console.error("Error fetching information data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div className="bg-white font-[family-name:var(--font-questrial)]">
       <Navbar />
       <main className="relative">
           <Hero />
-          {boat1 && <BoatsSection {...boat1} />}
-          {boat2 && <BoatsReversedSection {...boat2} />}
+          <BoatsSection />
+          <BoatsReversedSection />
           {/* <BoatsSection {} /> */}
           <UpcomingTrips />
           <DestinationSlider />

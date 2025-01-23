@@ -18,7 +18,6 @@ export default function Hero() {
 
         <div className="absolute inset-0 bg-black/40" />
 
-        {/* Content */}
         <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-4xl md:text-6xl font-medium text-white mb-4">
             PREMIER DIVING LIVEABOARDS
