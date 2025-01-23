@@ -27,14 +27,15 @@ const Navbar = () => {
   const sidebarBgRef = useRef(null);
   const menuItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  const setMenuItemRef = (index: number) => (element: HTMLAnchorElement | null) => {
-    menuItemsRef.current[index] = element;
-  };
+  const setMenuItemRef =
+    (index: number) => (element: HTMLAnchorElement | null) => {
+      menuItemsRef.current[index] = element;
+    };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => {
       const newState = !prev;
-      
+
       if (newState) {
         // Opening animation
         gsap.fromTo(
@@ -53,16 +54,16 @@ const Navbar = () => {
         menuItemsRef.current.forEach((item, index) => {
           gsap.fromTo(
             item,
-            { 
+            {
               x: -20,
-              opacity: 0 
+              opacity: 0,
             },
-            { 
+            {
               x: 0,
               opacity: 1,
               duration: 0.5,
               delay: 0.2 + index * 0.1,
-              ease: "power2.out"
+              ease: "power2.out",
             }
           );
         });
@@ -71,13 +72,13 @@ const Navbar = () => {
         gsap.to(sidebarBgRef.current, {
           opacity: 0,
           duration: 0.3,
-          ease: "power2.in"
+          ease: "power2.in",
         });
 
         gsap.to(sidebarRef.current, {
           x: "-100%",
           duration: 0.5,
-          ease: "power3.in"
+          ease: "power3.in",
         });
 
         // Fade out menu items
@@ -85,7 +86,7 @@ const Navbar = () => {
           gsap.to(item, {
             opacity: 0,
             duration: 0.2,
-            ease: "power2.in"
+            ease: "power2.in",
           });
         });
       }
@@ -98,6 +99,7 @@ const Navbar = () => {
   useEffect(() => {
     // Desktop animations
     if (window.innerWidth > 768) {
+      // Initial navbar animation
       gsap.fromTo(
         navRef.current,
         {
@@ -121,6 +123,9 @@ const Navbar = () => {
         },
       });
 
+      // Select both logo elements
+      const logoElements = document.querySelectorAll(".navbar-logo");
+
       navTimeline
         .to(navRef.current, {
           top: 0,
@@ -129,16 +134,27 @@ const Navbar = () => {
           paddingTop: "0.0rem",
           paddingBottom: "0.0rem",
         })
-        .to(navContentRef.current, {
-          color: "#000",
-        })
-        .from(logoRef.current, {
-          filter:
-            "invert(100%) sepia(8%) saturate(7470%) hue-rotate(282deg) brightness(106%) contrast(96%);",
-        })
-        .from(linksRef.current, {
-          color: "#fff",
-        })
+        .to(
+          navContentRef.current,
+          {
+            color: "#000",
+          },
+          "<"
+        )
+        .to(
+          logoElements,
+          {
+            filter: "brightness(0%) invert(0%)",
+          },
+          "<"
+        )
+        .from(
+          linksRef.current,
+          {
+            color: "#fff",
+          },
+          "<"
+        )
         .to(linksRef.current, {
           color: "#86752D",
           backgroundColor: "#FAFAFA",
@@ -176,7 +192,6 @@ const Navbar = () => {
 
   return (
     <div className="relative">
-      {/* Announcement Bar */}
       {isAnnouncementVisible && (
         <div className="relative bg-darkGold text-white py-3">
           <div className="container mx-auto flex items-center justify-between px-4">
@@ -197,12 +212,9 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Main Navigation */}
       <nav ref={navRef} className="fixed w-full z-50 transition-transform">
         <div className="w-full mx-auto" ref={navContentRef}>
-          {/* Top Bar */}
-          <div className="w-full flex items-center justify-between px-4 md:px-[8%] py-3">
-            {/* Left Section - Hidden on Mobile */}
+          <div className="w-full flex items-center justify-between px-4 md:px-[8%] py-5">
             <div className="hidden md:flex justify-center items-center gap-2">
               <LanguangeSwitcher />
               <div className="border-[#F6F6F6] border-r border-l p-2.5">
@@ -227,38 +239,37 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={toggleMobileMenu}
               className="md:hidden text-darkGold"
               aria-label="Toggle menu"
             >
-              <Menu className="w-6 h-6 brightness-0 invert" />
+              <Menu
+                ref={logoRef}
+                className="w-6 h-6 brightness-0 invert navbar-logo transition-all duration-300"
+              />
             </button>
 
-            {/* Center Logo */}
             <div
               className="absolute left-1/2 transform -translate-x-1/2"
               ref={logoRef}
             >
               <div className="relative w-24 md:w-32 h-12">
                 <Image
-                  src="/logo.svg"
+                  src="/logo2.svg"
                   alt="Company Logo"
                   fill
-                  className="object-contain brightness-0 invert"
+                  className="object-contain navbar-logo transition-all duration-300"
                   priority
                 />
               </div>
             </div>
 
-            {/* Enquire Button */}
             <Button colors="darkGold" className="uppercase hidden md:block">
               Enquire
             </Button>
           </div>
 
-          {/* Desktop Navigation Links */}
           <div
             ref={linksRef}
             className="hidden md:flex justify-center space-x-8 py-3 bg-gray-500/30"
@@ -276,21 +287,20 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Sidebar Background */}
       <div
         ref={sidebarBgRef}
         className={`fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden ${
-          isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none opacity-0"
+          isMobileMenuOpen
+            ? "pointer-events-auto"
+            : "pointer-events-none opacity-0"
         }`}
         onClick={toggleMobileMenu}
       >
-        {/* Mobile Sidebar Content */}
         <div
           ref={sidebarRef}
-          className="fixed inset-y-0 left-0 w-full max-w-sm bg-darkGold transform -translate-x-full"
+          className="fixed inset-y-0 left-0 w-full bg-darkGold transform -translate-x-full"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Sidebar Header */}
           <div className="grid grid-cols-3 items-center p-4">
             <button
               onClick={toggleMobileMenu}
@@ -299,13 +309,15 @@ const Navbar = () => {
             >
               <X className="w-6 h-6" />
             </button>
-            <div className="relative w-12 h-12">
-              <Image
-                src="/logo.svg"
-                alt="Company Logo"
-                fill
-                className="object-contain brightness-0 invert"
-              />
+            <div className="flex justify-center">
+              <div className="relative w-24 md:w-32 h-12">
+                <Image
+                  src="/logo.svg"
+                  alt="Company Logo"
+                  fill
+                  className="object-contain brightness-0 invert transition-all duration-300"
+                />
+              </div>
             </div>
           </div>
 
@@ -325,13 +337,12 @@ const Navbar = () => {
           </div>
 
           {/* Google Review - Mobile */}
-          <div className="absolute bottom-24 left-4 flex items-center gap-2 text-white">
+          <div className="absolute bottom-24 left-0 right-0 flex items-center justify-center gap-2 text-white">
             <Image
               src="/google-logo.svg"
               alt="Google"
               width={20}
               height={20}
-              className="brightness-0 invert"
             />
             <span className="font-semibold">
               {googleReview?.average || 5.0}
@@ -343,7 +354,7 @@ const Navbar = () => {
 
           {/* Enquire Button - Mobile */}
           <div className="absolute bottom-0 left-0 w-full p-4 bg-darkGold border-t border-white/20">
-            <Button colors="white" className="w-full justify-center uppercase">
+            <Button colors="gold" className="w-full justify-center uppercase">
               ENQUIRE
             </Button>
           </div>

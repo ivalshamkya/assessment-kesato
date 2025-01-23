@@ -87,7 +87,7 @@ const DestinationSlider: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full min-h-svh bg-black overflow-hidden">
+    <section className="relative w-full min-h-svh bg-[#232323] overflow-hidden">
       <div className="absolute left-8 md:left-16 lg:left-32 z-20 h-full flex flex-col">
         <div className="mt-16 md:mt-24 lg:mt-32">
           <div className="w-12 h-[1px] bg-[#B5A268] mb-4" />
